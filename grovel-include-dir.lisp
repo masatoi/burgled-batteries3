@@ -23,13 +23,15 @@
       (or (and (uiop:file-exists-p env-value) (cl:list env-value))
           (error "DLL for PYTHON3 not correctly pointed to by BB_PYTHON3_DYLIB: ~A" env-value)))))
 
+(defvar *detected-library* nil)
+
 (defun detect-python ()
   (setf *detected-library* nil)
   (or
    (let ((env-value (uiop:getenv "BB_PYTHON3_INCLUDE_DIR")))
      (when env-value
        (or (uiop:directory-exists-p env-value)
-           (error "BB_PYTHON3_INCLUDE_DIR is set, but does not point to an actual directory: %a" env-value))))
+           (error "BB_PYTHON3_INCLUDE_DIR is set, but does not point to an actual directory: ~A" env-value))))
    (when *miniconda3*
      (let ((path (if (pathnamep *miniconda3*)
                      *miniconda3*
