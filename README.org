@@ -21,6 +21,17 @@ implementation of Python) and Common Lisp.
   
   (shutdown-python)
 #+end_src
+* Install with pyenv
+If you install python via pyenv, you need to install it with the shared libraries.
+#+begin_src sh
+CONFIGURE_OPTS="--enable-shared" pyenv install 3.6.12
+#+end_src
+
+Then, you need to set the path to as environment variable before load system.
+#+begin_src lisp
+(setf (uiop:getenv "BB_PYTHON3_DYLIB") "~/.pyenv/versions/3.6.12/lib/libpython3.6m.so.1.0"
+      (uiop:getenv "BB_PYTHON3_INCLUDE_DIR") "~/.pyenv/versions/3.6.12/include/python3.6m/")
+#+end_src
 
 * Why burgled-batteries3
 CLPython is great when it works.  However, if you're using a low-resource
